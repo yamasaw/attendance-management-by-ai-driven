@@ -18,4 +18,48 @@
 ## 作業ルール
 - コミット前にlintとテスト実行
 - 大きな変更は小さく分割してコミット
-- 機密情報のコミット禁止（.env等） 
+- 機密情報のコミット禁止（.env等）
+
+## Cloudflareデプロイ手順
+
+### 準備
+- Cloudflareアカウントの作成と必要な権限の設定
+- Wranglerのインストール: `npm install -g wrangler`
+- プロジェクトルートで認証: `wrangler login`
+
+### Next.jsのデプロイ
+- Next.jsプロジェクトのビルド: `npm run build`
+- `wrangler.toml`の設定確認（特にworker名とルート設定）
+- デプロイコマンド: `wrangler deploy`
+
+### D1データベースセットアップ
+- データベース作成: `wrangler d1 create <DB_NAME>`
+- マイグレーションファイル作成: `wrangler d1 migrations create <DB_NAME> <MIGRATION_NAME>`
+- マイグレーション実行: `wrangler d1 migrations apply <DB_NAME>`
+
+### R2ストレージ設定
+- バケット作成: `wrangler r2 bucket create <BUCKET_NAME>`
+- `wrangler.toml`にバケット設定を追加
+- 画像アップロード時のCORSヘッダー設定を忘れずに
+
+## よくある問題と対処法
+
+### Next.jsのエッジランタイム制限
+- `edge`関数で使用できないNode.js APIがある
+- 解決策: Next.jsのmiddlewareを使用するか、Cloudflare固有のAPIに置き換える
+
+### 大きなサイズのアセット
+- Cloudflare Workersのサイズ制限（最大1MB）に注意
+- 解決策: 大きなアセットはR2に格納し、Workers経由で配信
+
+### D1の同時接続数制限
+- 多数の同時DB接続でエラーが発生することがある
+- 解決策: コネクションプールの設定とクエリの最適化
+
+### 環境変数の扱い
+- 機密情報は`wrangler secret put <KEY>`で設定
+- 環境変数を変更した場合は再デプロイが必要
+
+### カスタムドメイン設定
+- Cloudflareダッシュボードで「Workers & Pages」→「ドメイン」から設定
+- カスタムドメインにはCloudflareのDNSを使用推奨 
