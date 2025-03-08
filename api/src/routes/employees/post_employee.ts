@@ -1,9 +1,9 @@
 import { Hono } from 'hono';
 import { zValidator } from '@hono/zod-validator';
-import { Bindings } from '../../routes/bindings';
-import { employeeSchema } from '../../schemas';
-import { createEmployee } from '../../model/update';
-import { validateEmployee } from '../../model/validate';
+import { Bindings } from '@routes/bindings';
+import { employeeSchema } from '@/schemas';
+import { createEmployee } from '@model/update';
+import { validateEmployee } from '@model/validate';
 
 // 従業員作成API
 const app = new Hono<{ Bindings: Bindings }>();

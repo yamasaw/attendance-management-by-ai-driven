@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
-import { Bindings } from '../../routes/bindings';
-import { getEmployeeById } from '../../model/fetch';
-import { deactivateEmployee, deleteEmployee } from '../../model/update';
+import { Bindings } from '@routes/bindings';
+import { getEmployeeById } from '@model/fetch';
+import { deactivateEmployee, deleteEmployee } from '@model/update';
 
 // 従業員削除API
 const app = new Hono<{ Bindings: Bindings }>();

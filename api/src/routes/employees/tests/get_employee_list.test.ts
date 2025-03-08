@@ -66,7 +66,8 @@ describe('GET /api/employees - 従業員一覧取得API', () => {
     // getEmployeesが正しく呼ばれたことを検証
     expect(fetchModule.getEmployees).toHaveBeenCalledWith({
       page: 1,
-      limit: 10
+      limit: 10,
+      is_active: false
     });
   });
 

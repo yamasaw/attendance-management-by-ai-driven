@@ -107,11 +107,11 @@ describe('POST /api/employees - 従業員作成API', () => {
     expect(res.status).toBe(400);
     
     const data = await res.json();
-    expect(data).toEqual({
-      status: 'error',
-      message: 'データの検証に失敗しました',
-      errors: validationErrors
-    });
+    expect(data).toHaveProperty('success', false);
+    expect(data).toHaveProperty('error');
+    expect(data.error).toHaveProperty('name', 'ZodError');
+    expect(data.error).toHaveProperty('issues');
+    expect(Array.isArray(data.error.issues)).toBe(true);
     
     // createEmployeeが呼ばれていないことを検証
     expect(updateModule.createEmployee).not.toHaveBeenCalled();

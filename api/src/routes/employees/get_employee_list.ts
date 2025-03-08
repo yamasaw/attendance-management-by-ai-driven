@@ -1,9 +1,9 @@
 import { Hono } from 'hono';
 import { zValidator } from '@hono/zod-validator';
 import { cache } from 'hono/cache';
-import { Bindings } from '../../routes/bindings';
-import { employeeSearchParamsSchema } from '../../schemas';
-import { getEmployees } from '../../model/fetch';
+import { Bindings } from '@routes/bindings';
+import { employeeSearchParamsSchema } from '@/schemas';
+import { getEmployees } from '@model/fetch';
 
 // 従業員一覧取得API
 const app = new Hono<{ Bindings: Bindings }>();

@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
-import { Bindings } from '../../routes/bindings';
-import { dbMiddleware } from '../../middleware';
+import { Bindings } from '@routes/bindings';
+import { dbMiddleware } from '@/middleware';
 
 import getEmployeeListApp from './get_employee_list';
 import getEmployeeApp from './get_employee';
