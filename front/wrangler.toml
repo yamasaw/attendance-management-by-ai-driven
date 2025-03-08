@@ -1,0 +1,17 @@
+# Worker設定
+name = "attendance-management-front"
+main = ".vercel/output/static/_worker.js"
+compatibility_date = "2023-05-18"
+compatibility_flags = ["nodejs_compat"]
+
+# 環境変数
+[vars]
+NEXT_PUBLIC_API_URL = "https://api.attendance-management.workers.dev/api"
+
+# 開発環境設定
+[env.development]
+vars = { NEXT_PUBLIC_API_URL = "http://localhost:8787/api" }
+
+# 本番環境設定
+[env.production]
+vars = { NEXT_PUBLIC_API_URL = "https://api.attendance-management.workers.dev/api" } 
