@@ -58,7 +58,7 @@ describe('POST /attendances - 勤怠作成API', () => {
     }, env);
     
     // レスポンスの検証
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(201);
     
     const data = await res.json();
     expect(data).toEqual({

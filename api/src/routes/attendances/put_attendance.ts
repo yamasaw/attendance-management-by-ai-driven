@@ -4,7 +4,6 @@ import { Bindings } from '@routes/bindings';
 import { createAttendanceSchema } from '@/schemas';
 import { updateAttendance } from '@model/attendance/update';
 import { validateAttendance } from '@model/attendance/validate';
-import { formatZodError } from '@/utils/validation';
 import { z } from 'zod';
 
 // 勤怠更新API

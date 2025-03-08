@@ -1,4 +1,3 @@
-import { Kysely } from 'kysely';
 import type { D1Database as CloudflareD1Database } from '@cloudflare/workers-types';
 
 // D1データベースの型定義
