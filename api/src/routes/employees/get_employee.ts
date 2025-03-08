@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
+import { getEmployeeById } from '@model/employee';
 import { Bindings } from '@routes/bindings';
-import { getEmployeeById } from '@model/fetch';
 
 // 従業員詳細取得API
 const app = new Hono<{ Bindings: Bindings }>();

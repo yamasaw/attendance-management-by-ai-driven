@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import getEmployeeApp from '../get_employee';
 import { createTestEnv } from '@tests/helpers';
-import * as fetchModule from '@model/fetch';
+import * as fetchModule from '@model/employee';
 
 // getEmployeeByIdをモック化
-vi.mock('@model/fetch', () => ({
+vi.mock('@model/employee', () => ({
   getEmployeeById: vi.fn()
 }));
 

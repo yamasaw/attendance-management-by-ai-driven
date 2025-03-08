@@ -1,15 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import postEmployeeApp from '../post_employee';
 import { createTestEnv } from '@tests/helpers';
-import * as updateModule from '@model/update';
-import * as validateModule from '@model/validate';
+import * as updateModule from '@model/employee';
+import * as validateModule from '@model/employee';
 
-// createEmployeeとvalidateEmployeeをモック化
-vi.mock('@model/update', () => ({
-  createEmployee: vi.fn()
-}));
-
-vi.mock('@model/validate', () => ({
+// モック化
+vi.mock('@model/employee', () => ({
+  createEmployee: vi.fn(),
   validateEmployee: vi.fn()
 }));
 

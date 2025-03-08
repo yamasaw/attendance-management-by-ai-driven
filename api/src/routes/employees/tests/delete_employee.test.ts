@@ -1,15 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import deleteEmployeeApp from '../delete_employee';
 import { createTestEnv } from '@tests/helpers';
-import * as fetchModule from '@model/fetch';
-import * as updateModule from '@model/update';
+import * as fetchModule from '@model/employee';
+import * as updateModule from '@model/employee';
 
-// getEmployeeById, deactivateEmployee, deleteEmployee をモック化
-vi.mock('@model/fetch', () => ({
-  getEmployeeById: vi.fn()
-}));
-
-vi.mock('@model/update', () => ({
+// モック化
+vi.mock('@model/employee', () => ({
+  getEmployeeById: vi.fn(),
   deactivateEmployee: vi.fn(),
   deleteEmployee: vi.fn()
 }));
