@@ -7,9 +7,10 @@
     "build": "next build --no-lint",
     "start": "next start",
     "lint": "next lint",
-    "build:open-next": "open-next build --skip-type-check",
+    "build:open-next": "NEXT_RUNTIME=edge open-next build --skip-type-check",
     "deploy": "npm run build:open-next && wrangler deploy",
-    "preview": "npm run build:open-next && wrangler dev --live-reload"
+    "deploy:prod": "npm run build:open-next && wrangler deploy --env production",
+    "preview": "npm run build:open-next && wrangler dev --local"
   },
   "keywords": [],
   "author": "Sosuke yamada <sosuke.yamada@example.com> (http://xxxx.com/sosuke.yamada)",
