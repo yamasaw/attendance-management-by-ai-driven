@@ -14,10 +14,6 @@
 ## GitHub CLI操作
 - 改行を含むコメントは明示的に\nを使用（例：gh pr comment --body "First line\nSecond line"）
 - 特殊文字を含む場合は$構文を使用（例：gh pr create --title $'Fix: line-break\nissue'）
-- 長文の場合はヒアドキュメントを使用（例：gh issue create --title "Bug report" --body "$(cat << 'EOF'
-  詳細な説明をここに記載
-  EOF
-  )"）
 
 ## 作業ルール
 - コミット前にlintとテスト実行
