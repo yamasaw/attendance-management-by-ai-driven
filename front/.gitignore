@@ -12,6 +12,7 @@
 .vercel
 .turbo
 .open-next/
+.edge/
 
 # production
 /build
