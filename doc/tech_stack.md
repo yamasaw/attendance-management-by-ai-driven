@@ -2,14 +2,12 @@
 
 ## 1. フロントエンド
 ### フレームワーク
-- Next.js 14.x
-- React 18.x
-- TypeScript 5.x
+- Next.js
+- TypeScript
 
-### UIライブラリ
+### UIライブラリ/デザインシステム
+- shadcn ui
 - Tailwind CSS
-- Headless UI
-- React Hook Form
 
 ### カメラ機能
 - MediaStream API (getUserMedia)
@@ -18,20 +16,18 @@
 
 ### 状態管理
 - React Query
-- Zustand
 
 ## 2. バックエンド
-### API
-- Next.js API Routes
-- REST API
+### APIサーバー
+- Cloudflare Workers
+- Hono（Webフレームワーク）
 
 ### データベース
-- PostgreSQL
-- Prisma (ORM)
+- Cloudflare D1
+- kysely（Query Builder）
 
 ### ファイルストレージ
-- ローカルファイルシステム（開発用）
-- AWS S3 / Cloudinary（本番用、写真保存用）
+- Cloudflare R2（写真保存用）
 
 ### 認証
 - 固定ターミナル認証（IPアドレスベース）
@@ -39,14 +35,11 @@
 
 ## 3. インフラストラクチャ
 ### ホスティング
-- Vercel
-
-### データベースホスティング
-- Vercel Postgres
+- Cloudflare Pages (フロントエンド)
+- Cloudflare Workers (バックエンド)
 
 ### モニタリング
-- Vercel Analytics
-- Sentry
+- Cloudflare Analytics
 
 ## 4. 開発ツール
 ### バージョン管理
@@ -54,10 +47,9 @@
 - GitHub
 
 ### テスト
-- Jest
+- Vitest
 - React Testing Library
 - Playwright (E2E)
-- MSW（モックサーバー）
 
 ### コード品質
 - ESLint
