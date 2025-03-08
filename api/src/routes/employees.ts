@@ -4,6 +4,10 @@ import { cache } from 'hono/cache';
 
 import { Employee, D1Database } from '../db/types';
 import { employeeSchema, employeeSearchParamsSchema } from '../schemas';
+import { getEmployees, getEmployeeById, getEmployeeByCode } from '../model/fetch';
+import { createEmployee, updateEmployee, deactivateEmployee, deleteEmployee } from '../model/update';
+import { validateEmployee } from '../model/validate';
+import { dbMiddleware } from '../model/middleware';
 
 // 環境変数の型定義
 type Bindings = {
@@ -14,55 +18,33 @@ type Bindings = {
 // Honoアプリケーションの作成
 const app = new Hono<{ Bindings: Bindings }>();
 
+// DB接続ミドルウェアを適用
+app.use('*', dbMiddleware());
+
 // 従業員一覧取得
 app.get('/', zValidator('query', employeeSearchParamsSchema), cache({ cacheName: 'employees-cache', cacheControl: 'max-age=60' }), async (c) => {
   try {
-    const { department, is_active, name, page, limit } = c.req.valid('query');
-    const offset = (page - 1) * limit;
+    const params = c.req.valid('query');
     
-    let query = `SELECT * FROM employees WHERE 1=1`;
-    const params: any[] = [];
-    
-    if (department) {
-      query += ` AND department = ?`;
-      params.push(department);
-    }
-    
-    if (is_active !== undefined) {
-      query += ` AND is_active = ?`;
-      params.push(is_active ? 1 : 0);
-    }
-    
-    if (name) {
-      query += ` AND name LIKE ?`;
-      params.push(`%${name}%`);
-    }
-    
-    // 総数を取得するクエリ
-    const countQuery = query.replace('SELECT *', 'SELECT COUNT(*) as total');
-    const countResult = await c.env.DB.prepare(countQuery).bind(...params).first<{ total: number }>();
-    const total = countResult?.total || 0;
-    
-    // ページング処理を追加
-    query += ` ORDER BY id LIMIT ? OFFSET ?`;
-    params.push(limit, offset);
-    
-    const result = await c.env.DB.prepare(query).bind(...params).all<Employee>();
+    const { employees, total } = await getEmployees(params);
     
     return c.json({
       status: 'success',
-      data: result.results,
-      pagination: {
-        total,
-        page,
-        limit,
-        pages: Math.ceil(total / limit)
+      data: {
+        employees,
+        pagination: {
+          total,
+          page: params.page,
+          limit: params.limit,
+          pages: Math.ceil(total / params.limit)
+        }
       }
     });
-  } catch (error: any) {
+  } catch (error) {
+    console.error('従業員一覧取得エラー:', error);
     return c.json({
       status: 'error',
-      message: error.message || '従業員一覧の取得に失敗しました',
+      message: '従業員一覧の取得に失敗しました'
     }, 500);
   }
 });
@@ -70,142 +52,119 @@ app.get('/', zValidator('query', employeeSearchParamsSchema), cache({ cacheName:
 // 従業員詳細取得
 app.get('/:id', async (c) => {
   try {
-    const id = c.req.param('id');
-    const employee = await c.env.DB.prepare(`SELECT * FROM employees WHERE id = ?`).bind(id).first<Employee>();
+    const id = parseInt(c.req.param('id'), 10);
+    if (isNaN(id)) {
+      return c.json({
+        status: 'error',
+        message: '無効なIDです'
+      }, 400);
+    }
+    
+    const employee = await getEmployeeById(id);
     
     if (!employee) {
       return c.json({
         status: 'error',
-        message: '従業員が見つかりません',
+        message: '従業員が見つかりません'
       }, 404);
     }
     
     return c.json({
       status: 'success',
-      data: employee,
+      data: {
+        employee
+      }
     });
-  } catch (error: any) {
+  } catch (error) {
+    console.error('従業員詳細取得エラー:', error);
     return c.json({
       status: 'error',
-      message: error.message || '従業員情報の取得に失敗しました',
+      message: '従業員詳細の取得に失敗しました'
     }, 500);
   }
 });
 
-// 従業員追加
+// 従業員新規作成
 app.post('/', zValidator('json', employeeSchema), async (c) => {
   try {
     const data = c.req.valid('json');
-    const timestamp = new Date().toISOString();
     
-    const result = await c.env.DB.prepare(`
-      INSERT INTO employees (employee_code, name, department, position, email, phone, profile_image_url, is_active, created_at, updated_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `).bind(
-      data.employee_code,
-      data.name,
-      data.department,
-      data.position,
-      data.email || null,
-      data.phone || null,
-      data.profile_image_url || null,
-      data.is_active ? 1 : 0,
-      timestamp,
-      timestamp
-    ).run();
+    // バリデーション
+    const validationResult = await validateEmployee(data);
     
-    if (!result.success) {
-      throw new Error(result.error || '従業員の追加に失敗しました');
-    }
-    
-    const newEmployee = await c.env.DB.prepare(`SELECT * FROM employees WHERE employee_code = ?`).bind(data.employee_code).first<Employee>();
-    
-    return c.json({
-      status: 'success',
-      message: '従業員を追加しました',
-      data: newEmployee,
-    }, 201);
-  } catch (error: any) {
-    // 重複エラーの処理
-    if (error.message.includes('UNIQUE constraint failed')) {
+    if (!validationResult.valid) {
       return c.json({
         status: 'error',
-        message: '従業員コードが既に使用されています',
+        message: 'データの検証に失敗しました',
+        errors: validationResult.errors
       }, 400);
     }
     
+    // 従業員を作成
+    const newEmployee = await createEmployee(data);
+    
+    return c.json({
+      status: 'success',
+      message: '従業員を作成しました',
+      data: {
+        employee: newEmployee
+      }
+    }, 201);
+  } catch (error) {
+    console.error('従業員作成エラー:', error);
     return c.json({
       status: 'error',
-      message: error.message || '従業員の追加に失敗しました',
+      message: '従業員の作成に失敗しました'
     }, 500);
   }
 });
 
 // 従業員更新
-app.put('/:id', zValidator('json', employeeSchema), async (c) => {
+app.put('/:id', zValidator('json', employeeSchema.partial()), async (c) => {
   try {
-    const id = c.req.param('id');
-    const data = c.req.valid('json');
-    const timestamp = new Date().toISOString();
-    
-    // 従業員の存在確認
-    const existingEmployee = await c.env.DB.prepare(`SELECT * FROM employees WHERE id = ?`).bind(id).first<Employee>();
-    
-    if (!existingEmployee) {
+    const id = parseInt(c.req.param('id'), 10);
+    if (isNaN(id)) {
       return c.json({
         status: 'error',
-        message: '更新対象の従業員が見つかりません',
+        message: '無効なIDです'
+      }, 400);
+    }
+    
+    const data = c.req.valid('json');
+    
+    // バリデーション
+    const validationResult = await validateEmployee(data, true);
+    
+    if (!validationResult.valid) {
+      return c.json({
+        status: 'error',
+        message: 'データの検証に失敗しました',
+        errors: validationResult.errors
+      }, 400);
+    }
+    
+    // 従業員を更新
+    const updatedEmployee = await updateEmployee(id, data);
+    
+    if (!updatedEmployee) {
+      return c.json({
+        status: 'error',
+        message: '従業員が見つかりません'
       }, 404);
     }
-    
-    const result = await c.env.DB.prepare(`
-      UPDATE employees SET
-        employee_code = ?,
-        name = ?,
-        department = ?,
-        position = ?,
-        email = ?,
-        phone = ?,
-        profile_image_url = ?,
-        is_active = ?,
-        updated_at = ?
-      WHERE id = ?
-    `).bind(
-      data.employee_code,
-      data.name,
-      data.department,
-      data.position,
-      data.email || null,
-      data.phone || null,
-      data.profile_image_url || null,
-      data.is_active ? 1 : 0,
-      timestamp,
-      id
-    ).run();
-    
-    if (!result.success) {
-      throw new Error(result.error || '従業員の更新に失敗しました');
-    }
-    
-    const updatedEmployee = await c.env.DB.prepare(`SELECT * FROM employees WHERE id = ?`).bind(id).first<Employee>();
     
     return c.json({
       status: 'success',
       message: '従業員情報を更新しました',
-      data: updatedEmployee,
+      data: {
+        employee: updatedEmployee
+      }
     });
-  } catch (error: any) {
-    // 重複エラーの処理
-    if (error.message.includes('UNIQUE constraint failed')) {
-      return c.json({
-        status: 'error',
-        message: '従業員コードが既に使用されています',
-      }, 400);
-    }
-    
+  } catch (error) {
+    console.error('従業員更新エラー:', error);
     return c.json({
       status: 'error',
-      message: error.message || '従業員の更新に失敗しました',
+      message: '従業員情報の更新に失敗しました'
     }, 500);
   }
 });
@@ -213,42 +172,62 @@ app.put('/:id', zValidator('json', employeeSchema), async (c) => {
 // 従業員削除
 app.delete('/:id', async (c) => {
   try {
-    const id = c.req.param('id');
-    
-    // 従業員の存在確認
-    const existingEmployee = await c.env.DB.prepare(`SELECT * FROM employees WHERE id = ?`).bind(id).first<Employee>();
-    
-    if (!existingEmployee) {
+    const id = parseInt(c.req.param('id'), 10);
+    if (isNaN(id)) {
       return c.json({
         status: 'error',
-        message: '削除対象の従業員が見つかりません',
-      }, 404);
-    }
-    
-    // 関連する勤怠記録の確認
-    const attendanceCount = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM attendances WHERE employee_id = ?`).bind(id).first<{ count: number }>();
-    
-    if (attendanceCount && attendanceCount.count > 0) {
-      return c.json({
-        status: 'error',
-        message: 'この従業員には勤怠記録が関連付けられているため削除できません',
+        message: '無効なIDです'
       }, 400);
     }
     
-    const result = await c.env.DB.prepare(`DELETE FROM employees WHERE id = ?`).bind(id).run();
+    // 従業員の勤怠記録があるかどうかで論理削除か物理削除かを判断
+    // 勤怠記録があれば論理削除、なければ物理削除
+    const employeeData = await getEmployeeById(id);
     
-    if (!result.success) {
-      throw new Error(result.error || '従業員の削除に失敗しました');
+    if (!employeeData) {
+      return c.json({
+        status: 'error',
+        message: '従業員が見つかりません'
+      }, 404);
     }
     
-    return c.json({
-      status: 'success',
-      message: '従業員を削除しました',
-    });
-  } catch (error: any) {
+    // TODO: 勤怠記録のチェックロジックはモデルに移動する
+    const attendanceCount = await c.env.DB.prepare('SELECT COUNT(*) as count FROM attendances WHERE employee_id = ?').bind(id).first<{ count: number }>();
+    
+    let result: boolean;
+    
+    if (attendanceCount && attendanceCount.count > 0) {
+      // 勤怠記録がある場合は論理削除
+      result = await deactivateEmployee(id);
+      
+      if (result) {
+        return c.json({
+          status: 'success',
+          message: '従業員を非アクティブ化しました（勤怠記録があるため）'
+        });
+      }
+    } else {
+      // 勤怠記録がない場合は物理削除
+      result = await deleteEmployee(id);
+      
+      if (result) {
+        return c.json({
+          status: 'success',
+          message: '従業員を完全に削除しました'
+        });
+      }
+    }
+    
+    // 削除失敗
     return c.json({
       status: 'error',
-      message: error.message || '従業員の削除に失敗しました',
+      message: '従業員の削除に失敗しました'
+    }, 500);
+  } catch (error) {
+    console.error('従業員削除エラー:', error);
+    return c.json({
+      status: 'error',
+      message: '従業員の削除に失敗しました'
     }, 500);
   }
 });
