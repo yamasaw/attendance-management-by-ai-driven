@@ -1,0 +1,28 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev src/index.ts",
+    "deploy": "wrangler deploy src/index.ts",
+    "build": "tsc",
+    "test": "vitest run",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write 'src/**/*.{ts,js,json}'"
+  },
+  "keywords": [],
+  "author": "Sosuke yamada <sosuke.yamada@example.com> (http://xxxx.com/sosuke.yamada)",
+  "license": "ISC",
+  "description": "勤怠管理システムのバックエンドAPI",
+  "dependencies": {
+    "@cloudflare/workers-types": "^4.20250303.0",
+    "@hono/zod-validator": "^0.4.3",
+    "hono": "^4.7.4",
+    "wrangler": "^3.114.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.2"
+  }
+}

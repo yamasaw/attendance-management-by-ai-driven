@@ -1,10 +1,12 @@
 # dependencies
 /node_modules
+/api/node_modules
 /.pnp
 .pnp.js
 
 # testing
 /coverage
+/api/coverage
 
 # next.js
 /.next/
@@ -12,6 +14,7 @@
 
 # production
 /build
+/api/dist
 
 # misc
 .DS_Store
@@ -25,10 +28,14 @@ yarn-error.log*
 # local env files
 .env*.local
 .env
+/api/.env
 
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts 
+next-env.d.ts
+
+# Cloudflare
+.wrangler/ 
