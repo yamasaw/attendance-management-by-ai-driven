@@ -1,10 +1,10 @@
-import { getDB } from './db';
+import { getDB } from '@/utils/db';
 import { 
   NewEmployee, 
   EmployeeUpdate, 
   toEmployeeType 
-} from '../types';
-import { Employee as EmployeeType } from '../db/types';
+} from '@/types';
+import { Employee as EmployeeType } from '@db/types';
 
 /**
  * 新しい従業員を作成する

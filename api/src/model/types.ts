@@ -1,5 +1,5 @@
 import { ColumnType, Generated, Insertable, Selectable, Updateable } from 'kysely';
-import { Employee as EmployeeType } from '../db/types';
+import { Employee as EmployeeType } from '@db/types';
 
 // Kyselyのデータベースインターフェース
 export interface Database {

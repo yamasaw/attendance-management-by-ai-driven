@@ -1,15 +1,15 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import postEmployeeApp from '../post_employee';
-import { createTestEnv } from '../../../tests/helpers';
-import * as updateModule from '../../../model/update';
-import * as validateModule from '../../../model/validate';
+import { createTestEnv } from '@tests/helpers';
+import * as updateModule from '@model/update';
+import * as validateModule from '@model/validate';
 
 // createEmployeeとvalidateEmployeeをモック化
-vi.mock('../../../model/update', () => ({
+vi.mock('@model/update', () => ({
   createEmployee: vi.fn()
 }));
 
-vi.mock('../../../model/validate', () => ({
+vi.mock('@model/validate', () => ({
   validateEmployee: vi.fn()
 }));
 

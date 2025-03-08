@@ -1,5 +1,5 @@
 import { Context, MiddlewareHandler, Next } from 'hono';
-import { initDB } from './model/db';
+import { initDB } from '@/utils/db';
 
 /**
  * DB接続用のミドルウェア

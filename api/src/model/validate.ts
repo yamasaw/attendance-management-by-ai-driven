@@ -1,10 +1,10 @@
-import { getDB } from './db';
+import { getDB } from '@/utils/db';
 import { 
   NewEmployee, 
   EmployeeUpdate, 
   ValidationError, 
   ValidationResult 
-} from '../types';
+} from '@/types';
 
 /**
  * 従業員データの検証

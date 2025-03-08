@@ -1,6 +1,6 @@
 import { Kysely } from 'kysely';
 import { D1Dialect } from 'kysely-d1';
-import { Database, D1Kysely } from '../types';
+import { Database, D1Kysely } from '@/types';
 import type { D1Database } from '@cloudflare/workers-types';
 
 // シングルトンインスタンスを保持する変数
