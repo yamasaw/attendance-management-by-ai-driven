@@ -2,11 +2,11 @@ import { Hono } from 'hono';
 import { Bindings } from '../../routes/bindings';
 import { dbMiddleware } from '../../middleware';
 
-import getListApp from './get_list';
-import getDetailApp from './get_detail';
+import getEmployeeListApp from './get_employee_list';
+import getEmployeeApp from './get_employee';
 import postEmployeeApp from './post_employee';
-import putUpdateApp from './put_update';
-import deleteDeleteApp from './delete_delete';
+import putEmployeeApp from './put_employee';
+import deleteEmployeeApp from './delete_employee';
 
 // 従業員API全体のエントリーポイント
 const app = new Hono<{ Bindings: Bindings }>();
@@ -15,10 +15,10 @@ const app = new Hono<{ Bindings: Bindings }>();
 app.use('*', dbMiddleware());
 
 // 各APIをマウント
-app.route('/', getListApp);             // 一覧取得
-app.route('/:id', getDetailApp);        // 詳細取得
-app.route('/', postEmployeeApp);        // 新規作成
-app.route('/:id', putUpdateApp);        // 更新
-app.route('/:id', deleteDeleteApp);     // 削除
+app.route('/', getEmployeeListApp);      // 一覧取得
+app.route('/:id', getEmployeeApp);       // 詳細取得
+app.route('/', postEmployeeApp);         // 新規作成
+app.route('/:id', putEmployeeApp);       // 更新
+app.route('/:id', deleteEmployeeApp);    // 削除
 
 export default app; 
