@@ -9,7 +9,7 @@ vi.mock('@model/attendance/fetch', () => ({
   getAttendances: vi.fn()
 }));
 
-describe('GET /api/attendances - 勤怠一覧取得API', () => {
+describe('GET /attendances - 勤怠一覧取得API', () => {
   beforeEach(() => {
     // テスト前に毎回モックをリセット
     vi.resetAllMocks();
@@ -51,7 +51,9 @@ describe('GET /api/attendances - 勤怠一覧取得API', () => {
     const env = createTestEnv();
 
     // リクエスト実行
-    const res = await getAttendanceListApp.fetch(new Request('https://example.com/api/attendances?page=1&limit=10'), env);
+    const res = await getAttendanceListApp.request('/?page=1&limit=10', {
+      method: 'GET'
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(200);
@@ -88,7 +90,9 @@ describe('GET /api/attendances - 勤怠一覧取得API', () => {
     const env = createTestEnv();
 
     // フィルタ付きリクエスト実行
-    await getAttendanceListApp.fetch(new Request('https://example.com/api/attendances?page=1&limit=10&employee_id=1&type=check_in&start_date=2023-01-01T00:00:00.000Z&end_date=2023-01-31T23:59:59.999Z'), env);
+    await getAttendanceListApp.request('/?page=1&limit=10&employee_id=1&type=check_in&start_date=2023-01-01T00:00:00.000Z&end_date=2023-01-31T23:59:59.999Z', {
+      method: 'GET'
+    }, env);
     
     // getAttendancesに正しいパラメータが渡されたことを検証
     expect(fetchModule.getAttendances).toHaveBeenCalledWith({
@@ -109,7 +113,9 @@ describe('GET /api/attendances - 勤怠一覧取得API', () => {
     const env = createTestEnv();
 
     // リクエスト実行
-    const res = await getAttendanceListApp.fetch(new Request('https://example.com/api/attendances?page=1&limit=10'), env);
+    const res = await getAttendanceListApp.request('/?page=1&limit=10', {
+      method: 'GET'
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(500);

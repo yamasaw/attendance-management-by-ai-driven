@@ -14,7 +14,7 @@ vi.mock('@model/attendance/validate', () => ({
   validateAttendance: vi.fn()
 }));
 
-describe('POST /api/attendances - 勤怠作成API', () => {
+describe('POST /attendances - 勤怠作成API', () => {
   beforeEach(() => {
     // テスト前に毎回モックをリセット
     vi.resetAllMocks();
@@ -45,7 +45,7 @@ describe('POST /api/attendances - 勤怠作成API', () => {
     const env = createTestEnv();
 
     // リクエスト実行
-    const res = await postAttendanceApp.fetch(new Request('https://example.com/api/attendances', {
+    const res = await postAttendanceApp.request('/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -55,7 +55,7 @@ describe('POST /api/attendances - 勤怠作成API', () => {
         type: 'check_in',
         timestamp: '2023-01-01T09:00:00.000Z'
       })
-    }), env);
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(201);
@@ -99,13 +99,13 @@ describe('POST /api/attendances - 勤怠作成API', () => {
     const env = createTestEnv();
 
     // リクエスト実行
-    const res = await postAttendanceApp.fetch(new Request('https://example.com/api/attendances', {
+    const res = await postAttendanceApp.request('/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ timestamp: '2023-01-01T09:00:00.000Z' })
-    }), env);
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(400);
@@ -135,7 +135,7 @@ describe('POST /api/attendances - 勤怠作成API', () => {
     const env = createTestEnv();
 
     // リクエスト実行
-    const res = await postAttendanceApp.fetch(new Request('https://example.com/api/attendances', {
+    const res = await postAttendanceApp.request('/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -145,7 +145,7 @@ describe('POST /api/attendances - 勤怠作成API', () => {
         type: 'check_in',
         timestamp: '2023-01-01T09:00:00.000Z'
       })
-    }), env);
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(500);

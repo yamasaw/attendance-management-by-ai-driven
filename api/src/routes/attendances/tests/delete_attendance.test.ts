@@ -14,7 +14,7 @@ vi.mock('@model/attendance/update', () => ({
   deleteAttendance: vi.fn()
 }));
 
-describe('DELETE /api/attendances/:id - 勤怠削除API', () => {
+describe('DELETE /attendances/:id - 勤怠削除API', () => {
   beforeEach(() => {
     // テスト前に毎回モックをリセット
     vi.resetAllMocks();
@@ -41,9 +41,9 @@ describe('DELETE /api/attendances/:id - 勤怠削除API', () => {
     const env = createTestEnv();
 
     // リクエスト実行
-    const res = await deleteAttendanceApp.fetch(new Request('https://example.com/api/attendances/1', {
+    const res = await deleteAttendanceApp.request('/1', {
       method: 'DELETE'
-    }), env);
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(200);
@@ -64,9 +64,9 @@ describe('DELETE /api/attendances/:id - 勤怠削除API', () => {
     const env = createTestEnv();
 
     // 無効なIDでリクエスト実行
-    const res = await deleteAttendanceApp.fetch(new Request('https://example.com/api/attendances/invalid', {
+    const res = await deleteAttendanceApp.request('/invalid', {
       method: 'DELETE'
-    }), env);
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(400);
@@ -90,9 +90,9 @@ describe('DELETE /api/attendances/:id - 勤怠削除API', () => {
     const env = createTestEnv();
 
     // リクエスト実行
-    const res = await deleteAttendanceApp.fetch(new Request('https://example.com/api/attendances/999', {
+    const res = await deleteAttendanceApp.request('/999', {
       method: 'DELETE'
-    }), env);
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(404);
@@ -129,9 +129,9 @@ describe('DELETE /api/attendances/:id - 勤怠削除API', () => {
     const env = createTestEnv();
 
     // リクエスト実行
-    const res = await deleteAttendanceApp.fetch(new Request('https://example.com/api/attendances/1', {
+    const res = await deleteAttendanceApp.request('/1', {
       method: 'DELETE'
-    }), env);
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(500);
@@ -164,9 +164,9 @@ describe('DELETE /api/attendances/:id - 勤怠削除API', () => {
     const env = createTestEnv();
 
     // リクエスト実行
-    const res = await deleteAttendanceApp.fetch(new Request('https://example.com/api/attendances/1', {
+    const res = await deleteAttendanceApp.request('/1', {
       method: 'DELETE'
-    }), env);
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(500);

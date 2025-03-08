@@ -9,7 +9,7 @@ vi.mock('@model/attendance/fetch', () => ({
   getAttendanceById: vi.fn()
 }));
 
-describe('GET /api/attendances/:id - 勤怠詳細取得API', () => {
+describe('GET /attendances/:id - 勤怠詳細取得API', () => {
   beforeEach(() => {
     // テスト前に毎回モックをリセット
     vi.resetAllMocks();
@@ -35,7 +35,9 @@ describe('GET /api/attendances/:id - 勤怠詳細取得API', () => {
     const env = createTestEnv();
 
     // リクエスト実行
-    const res = await getAttendanceApp.fetch(new Request('https://example.com/api/attendances/1'), env);
+    const res = await getAttendanceApp.request('/1', {
+      method: 'GET'
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(200);
@@ -57,7 +59,9 @@ describe('GET /api/attendances/:id - 勤怠詳細取得API', () => {
     const env = createTestEnv();
 
     // 無効なIDでリクエスト実行
-    const res = await getAttendanceApp.fetch(new Request('https://example.com/api/attendances/invalid'), env);
+    const res = await getAttendanceApp.request('/invalid', {
+      method: 'GET'
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(400);
@@ -80,7 +84,9 @@ describe('GET /api/attendances/:id - 勤怠詳細取得API', () => {
     const env = createTestEnv();
 
     // リクエスト実行
-    const res = await getAttendanceApp.fetch(new Request('https://example.com/api/attendances/999'), env);
+    const res = await getAttendanceApp.request('/999', {
+      method: 'GET'
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(404);
@@ -103,7 +109,9 @@ describe('GET /api/attendances/:id - 勤怠詳細取得API', () => {
     const env = createTestEnv();
 
     // リクエスト実行
-    const res = await getAttendanceApp.fetch(new Request('https://example.com/api/attendances/1'), env);
+    const res = await getAttendanceApp.request('/1', {
+      method: 'GET'
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(500);

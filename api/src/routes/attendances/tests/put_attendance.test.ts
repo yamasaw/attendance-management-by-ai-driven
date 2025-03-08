@@ -14,7 +14,7 @@ vi.mock('@model/attendance/validate', () => ({
   validateAttendance: vi.fn()
 }));
 
-describe('PUT /api/attendances/:id - 勤怠更新API', () => {
+describe('PUT /attendances/:id - 勤怠更新API', () => {
   beforeEach(() => {
     // テスト前に毎回モックをリセット
     vi.resetAllMocks();
@@ -45,7 +45,7 @@ describe('PUT /api/attendances/:id - 勤怠更新API', () => {
     const env = createTestEnv();
 
     // リクエスト実行
-    const res = await putAttendanceApp.fetch(new Request('https://example.com/api/attendances/1', {
+    const res = await putAttendanceApp.request('/1', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -56,7 +56,7 @@ describe('PUT /api/attendances/:id - 勤怠更新API', () => {
         location: '東京オフィス',
         image_url: 'https://example.com/image.jpg'
       })
-    }), env);
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(200);
@@ -84,13 +84,13 @@ describe('PUT /api/attendances/:id - 勤怠更新API', () => {
     const env = createTestEnv();
 
     // 無効なIDでリクエスト実行
-    const res = await putAttendanceApp.fetch(new Request('https://example.com/api/attendances/invalid', {
+    const res = await putAttendanceApp.request('/invalid', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ note: 'テスト' })
-    }), env);
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(400);
@@ -123,13 +123,13 @@ describe('PUT /api/attendances/:id - 勤怠更新API', () => {
     const env = createTestEnv();
 
     // リクエスト実行
-    const res = await putAttendanceApp.fetch(new Request('https://example.com/api/attendances/1', {
+    const res = await putAttendanceApp.request('/1', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ type: 'invalid_type' })
-    }), env);
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(400);
@@ -159,13 +159,13 @@ describe('PUT /api/attendances/:id - 勤怠更新API', () => {
     const env = createTestEnv();
 
     // リクエスト実行
-    const res = await putAttendanceApp.fetch(new Request('https://example.com/api/attendances/999', {
+    const res = await putAttendanceApp.request('/999', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ note: 'テスト' })
-    }), env);
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(404);
@@ -191,13 +191,13 @@ describe('PUT /api/attendances/:id - 勤怠更新API', () => {
     const env = createTestEnv();
 
     // リクエスト実行
-    const res = await putAttendanceApp.fetch(new Request('https://example.com/api/attendances/1', {
+    const res = await putAttendanceApp.request('/1', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ note: 'テスト' })
-    }), env);
+    }, env);
     
     // レスポンスの検証
     expect(res.status).toBe(500);
