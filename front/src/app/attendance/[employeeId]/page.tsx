@@ -1,7 +1,16 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-export default function AttendancePage({ params }: { params: { employeeId: string } }) {
+// TypeScriptエラーを回避するために型を追加
+type Params = {
+  employeeId: string;
+};
+
+export default function AttendancePage({ 
+  params 
+}: { 
+  params: Params
+}) {
   const employeeId = parseInt(params.employeeId, 10);
 
   return (
