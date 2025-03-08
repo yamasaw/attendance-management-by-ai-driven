@@ -8,6 +8,22 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
+  "vars": {
+    "API_URL": "https://api-dev.attendance-management.workers.dev/api"
+  },
+  "env": {
+    "development": {
+      "vars": {
+        "API_URL": "https://api-dev.attendance-management.workers.dev/api" 
+      }
+    },
+    "production": {
+      "name": "attendance-management-front-prod",
+      "vars": {
+        "API_URL": "https://api.attendance-management.workers.dev/api"
+      }
+    }
+  },
   "kv_namespaces": [
     {
       "binding": "NEXT_CACHE_WORKERS_KV",
