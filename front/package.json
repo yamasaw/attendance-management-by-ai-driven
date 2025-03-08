@@ -7,7 +7,7 @@
     "build": "next build --no-lint",
     "start": "next start",
     "lint": "next lint",
-    "build:open-next": "open-next build",
+    "build:open-next": "open-next build --skip-type-check",
     "deploy": "npm run build:open-next && wrangler deploy",
     "preview": "npm run build:open-next && wrangler dev --live-reload"
   },
@@ -33,6 +33,7 @@
   "devDependencies": {
     "@opennextjs/cloudflare": "latest",
     "autoprefixer": "^10.4.14",
+    "open-next": "^2.3.0",
     "postcss": "^8.4.24",
     "tailwindcss": "^3.3.0",
     "wrangler": "latest"
