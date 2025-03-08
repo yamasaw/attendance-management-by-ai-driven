@@ -1,20 +1,20 @@
-name: Deploy API
+name: Deploy Frontend
 
 on:
   push:
     branches: [ main, prod, development ]
     paths:
-      - 'api/**'
+      - 'front/**'
   workflow_dispatch:
 
 jobs:
-  deploy-api:
-    name: Deploy API to Cloudflare
+  deploy-front:
+    name: Deploy Frontend to Cloudflare
     runs-on: ubuntu-latest
 
     defaults:
       run:
-        working-directory: api
+        working-directory: front
 
     steps:
       - name: Checkout code
@@ -25,16 +25,16 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: api/package-lock.json
+          cache-dependency-path: front/package-lock.json
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests
-        run: npm test
+      - name: Run lint
+        run: npm run lint
 
-      - name: Publish to Cloudflare
-        run: npm run deploy
+      - name: Build and deploy to Cloudflare
+        run: npm run deploy:worker
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }} 
