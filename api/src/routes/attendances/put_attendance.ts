@@ -4,11 +4,20 @@ import { Bindings } from '@routes/bindings';
 import { createAttendanceSchema } from '@/schemas';
 import { updateAttendance } from '@model/attendance/update';
 import { validateAttendance } from '@model/attendance/validate';
+import { formatZodError } from '@/utils/validation';
+import { z } from 'zod';
 
 // 勤怠更新API
 const app = new Hono<{ Bindings: Bindings }>();
 
-app.put('/:id', zValidator('json', createAttendanceSchema.partial()), async (c) => {
+// 更新用のスキーマを定義
+const updateAttendanceSchema = createAttendanceSchema.extend({
+  employee_id: z.number().positive().optional(),
+  type: z.enum(['check_in', 'check_out', 'break_start', 'break_end']).optional(),
+  timestamp: z.string().datetime().optional(),
+});
+
+app.put('/:id', zValidator('json', updateAttendanceSchema), async (c) => {
   try {
     const id = parseInt(c.req.param('id'), 10);
     
@@ -42,13 +51,24 @@ app.put('/:id', zValidator('json', createAttendanceSchema.partial()), async (c) 
       }, 404);
     }
     
+    const now = new Date().toISOString();
     return c.json({
       status: 'success',
       message: '勤怠記録を更新しました',
       data: {
-        attendance: updatedAttendance
+        attendance: {
+          id: updatedAttendance.id,
+          employee_id: updatedAttendance.employee_id,
+          type: updatedAttendance.type,
+          timestamp: updatedAttendance.timestamp,
+          created_at: updatedAttendance.timestamp,
+          updated_at: now,
+          image_url: data.image_url ?? null,
+          location: data.location ?? null,
+          note: data.note ?? null
+        }
       }
-    });
+    }, 200);
   } catch (error) {
     console.error('勤怠更新エラー:', error);
     return c.json({
