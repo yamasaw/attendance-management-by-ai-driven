@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev src/index.ts --local --verbose",
+    "dev": "wrangler dev src/index.ts --local --log-level debug",
     "deploy": "wrangler deploy src/index.ts",
     "build": "tsc",
     "test": "vitest run",

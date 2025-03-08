@@ -1,7 +1,6 @@
-import { SelectQueryBuilder, sql } from 'kysely';
+import { sql } from 'kysely';
 import { getDB } from '@/utils/db';
 import { 
-  Employee, 
   EmployeeSearchParams, 
   toEmployeeType 
 } from '@/types';

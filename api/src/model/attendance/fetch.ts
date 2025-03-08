@@ -1,7 +1,6 @@
-import { SelectQueryBuilder, sql } from 'kysely';
+import { sql } from 'kysely';
 import { getDB } from '@/utils/db';
 import { 
-  Attendance,
   AttendanceSearchParams 
 } from '@/types';
 import { Attendance as AttendanceType } from '@db/types';
