@@ -1,14 +1,14 @@
 name = "attendance-management-api"
 main = "src/index.ts"
 compatibility_date = "2023-12-01"
-node_compat = true
+compatibility_flags = ["nodejs_compat"]
 
-# D1データベース設定
-# 実際のD1データベースを作成した後、以下のIDを適切な値に更新してください
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "attendance_db"
-# database_id = "your-database-id"
+# D1データベース設定（開発環境用）
+[[d1_databases]]
+binding = "DB"
+database_name = "attendance_db_dev"
+database_id = "50cf79fb-7923-4db7-bc3e-7beda4d42509"
+migrations_dir = "src/db/migrations"
 
 # 環境変数
 [vars]
@@ -25,11 +25,11 @@ ENVIRONMENT = "development"
 
 # 本番環境設定
 [env.production]
-# 本番環境用のD1データベース設定
-# [[env.production.d1_databases]]
-# binding = "DB"
-# database_name = "attendance_db_prod" 
-# database_id = "production-db-id"
+vars = { ENVIRONMENT = "production" }
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "attendance_db_prod"
+database_id = "ac461ea1-bcf9-4128-b6b1-30fc08573f2d"
 
 # ビルド設定
 [build]

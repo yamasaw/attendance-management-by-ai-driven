@@ -1,7 +1,6 @@
 import { Hono } from 'hono';
 import { zValidator } from '@hono/zod-validator';
 import { cache } from 'hono/cache';
-import { z } from 'zod';
 
 import { Employee, D1Database } from '../db/types';
 import { employeeSchema, employeeSearchParamsSchema } from '../schemas';
