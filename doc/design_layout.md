@@ -8,89 +8,22 @@
 
 システム全体で一貫したカラースキームを採用し、視認性と操作性を高めます。
 
-<table>
-  <tr>
-    <th colspan="3">メインカラー</th>
-  </tr>
-  <tr>
-    <td style="background-color: #0078D4; color: white; padding: 10px; width: 100px;"><div style="width: 50px; height: 50px; background-color: #0078D4;"></div></td>
-    <td><b>プライマリブルー</b><br>#0078D4</td>
-    <td>アクションやリンク、重要な要素</td>
-  </tr>
-  <tr>
-    <td style="background-color: #2B88D8; color: white; padding: 10px;"><div style="width: 50px; height: 50px; background-color: #2B88D8;"></div></td>
-    <td><b>セカンダリブルー</b><br>#2B88D8</td>
-    <td>サブアクション、補足情報</td>
-  </tr>
-</table>
+#### メインカラー
+- **プライマリブルー**: `#0078D4` ![](https://via.placeholder.com/15/0078D4/0078D4.png) - アクションやリンク、重要な要素
+- **セカンダリブルー**: `#2B88D8` ![](https://via.placeholder.com/15/2B88D8/2B88D8.png) - サブアクション、補足情報
 
-<table>
-  <tr>
-    <th colspan="3">サブカラー</th>
-  </tr>
-  <tr>
-    <td style="background-color: #F3F2F1; padding: 10px; width: 100px;"><div style="width: 50px; height: 50px; background-color: #F3F2F1; border: 1px solid #ccc;"></div></td>
-    <td><b>ライトグレー</b><br>#F3F2F1</td>
-    <td>背景、非アクティブ要素</td>
-  </tr>
-  <tr>
-    <td style="background-color: #323130; color: white; padding: 10px;"><div style="width: 50px; height: 50px; background-color: #323130;"></div></td>
-    <td><b>ダークグレー</b><br>#323130</td>
-    <td>テキスト、ヘッダー</td>
-  </tr>
-</table>
+#### サブカラー
+- **ライトグレー**: `#F3F2F1` ![](https://via.placeholder.com/15/F3F2F1/F3F2F1.png) - 背景、非アクティブ要素
+- **ダークグレー**: `#323130` ![](https://via.placeholder.com/15/323130/323130.png) - テキスト、ヘッダー
 
-<table>
-  <tr>
-    <th colspan="3">アクセントカラー</th>
-  </tr>
-  <tr>
-    <td style="background-color: #107C10; color: white; padding: 10px; width: 100px;"><div style="width: 50px; height: 50px; background-color: #107C10;"></div></td>
-    <td><b>成功緑</b><br>#107C10</td>
-    <td>完了、成功通知</td>
-  </tr>
-  <tr>
-    <td style="background-color: #F2C811; padding: 10px;"><div style="width: 50px; height: 50px; background-color: #F2C811;"></div></td>
-    <td><b>警告オレンジ</b><br>#F2C811</td>
-    <td>警告、注意喚起</td>
-  </tr>
-  <tr>
-    <td style="background-color: #D13438; color: white; padding: 10px;"><div style="width: 50px; height: 50px; background-color: #D13438;"></div></td>
-    <td><b>エラー赤</b><br>#D13438</td>
-    <td>エラー、重要警告</td>
-  </tr>
-</table>
+#### アクセントカラー
+- **成功緑**: `#107C10` ![](https://via.placeholder.com/15/107C10/107C10.png) - 完了、成功通知
+- **警告オレンジ**: `#F2C811` ![](https://via.placeholder.com/15/F2C811/F2C811.png) - 警告、注意喚起
+- **エラー赤**: `#D13438` ![](https://via.placeholder.com/15/D13438/D13438.png) - エラー、重要警告
 
-<table>
-  <tr>
-    <th colspan="3">ニュートラルカラー</th>
-  </tr>
-  <tr>
-    <td style="background-color: #FFFFFF; padding: 10px; width: 100px;"><div style="width: 50px; height: 50px; background-color: #FFFFFF; border: 1px solid #ccc;"></div></td>
-    <td><b>ホワイト</b><br>#FFFFFF</td>
-    <td>カード背景、コンテンツエリア</td>
-  </tr>
-  <tr>
-    <td style="background-color: #000000; color: white; padding: 10px;"><div style="width: 50px; height: 50px; background-color: #000000;"></div></td>
-    <td><b>ブラック</b><br>#000000</td>
-    <td>主要テキスト</td>
-  </tr>
-</table>
-
-<!-- GitHub Markdown用の色表示方法（HTMLスタイルが適用されない場合の代替手段） -->
-#### GitHub上でのカラー表示
-
-以下は、GitHub上でもカラーを視覚的に確認できる代替表現です：
-
-- **プライマリブルー**: `#0078D4` ![](https://via.placeholder.com/15/0078D4/0078D4.png)
-- **セカンダリブルー**: `#2B88D8` ![](https://via.placeholder.com/15/2B88D8/2B88D8.png)
-- **ライトグレー**: `#F3F2F1` ![](https://via.placeholder.com/15/F3F2F1/F3F2F1.png)
-- **ダークグレー**: `#323130` ![](https://via.placeholder.com/15/323130/323130.png)
-- **成功緑**: `#107C10` ![](https://via.placeholder.com/15/107C10/107C10.png)
-- **警告オレンジ**: `#F2C811` ![](https://via.placeholder.com/15/F2C811/F2C811.png)
-- **エラー赤**: `#D13438` ![](https://via.placeholder.com/15/D13438/D13438.png)
-- **ホワイト**: `#FFFFFF` ![](https://via.placeholder.com/15/FFFFFF/FFFFFF.png)
-- **ブラック**: `#000000` ![](https://via.placeholder.com/15/000000/000000.png)
+#### ニュートラルカラー
+- **ホワイト**: `#FFFFFF` ![](https://via.placeholder.com/15/FFFFFF/FFFFFF.png) - カード背景、コンテンツエリア
+- **ブラック**: `#000000` ![](https://via.placeholder.com/15/000000/000000.png) - 主要テキスト
 
 ### タイポグラフィ設計
 
