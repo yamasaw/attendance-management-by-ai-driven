@@ -14,9 +14,6 @@
 - canvas API (写真キャプチャ)
 - WebRTC
 
-### 状態管理
-- React Query
-
 ## 2. バックエンド
 ### APIサーバー
 - Cloudflare Workers
@@ -30,13 +27,11 @@
 - Cloudflare R2（写真保存用）
 
 ### 認証
-- 固定ターミナル認証（IPアドレスベース）
-- 管理者画面用の基本認証
+- 管理画面用Basic認証
 
 ## 3. インフラストラクチャ
 ### ホスティング
-- Cloudflare Pages (フロントエンド)
-- Cloudflare Workers (バックエンド)
+- Cloudflare Workers (フロントエンド & バックエンド)
 
 ### モニタリング
 - Cloudflare Analytics
@@ -48,8 +43,8 @@
 
 ### テスト
 - Vitest
-- React Testing Library
 - Playwright (E2E)
+- VRT (Visual Regression Testing)
 
 ### コード品質
 - ESLint
