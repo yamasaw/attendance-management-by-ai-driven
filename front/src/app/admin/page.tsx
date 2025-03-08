@@ -1,7 +1,5 @@
 import Link from 'next/link';
 
-export const runtime = "edge";
-
 export default function AdminPage() {
   return (
     <div className="flex flex-col items-center w-full max-w-4xl mx-auto">
@@ -17,7 +15,7 @@ export default function AdminPage() {
         <p className="text-gray-500">月次レポートを表示します</p>
       </div>
       
-      <Link href="/" className="mt-4 text-primary-secondary hover:underline">
+      <Link href="/" className="mt-4 text-primary hover:underline">
         勤怠記録画面へ戻る
       </Link>
     </div>

@@ -1,8 +1,6 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
-export const runtime = "edge";
-
 export default function AttendancePage({ params }: { params: { employeeId: string } }) {
   const employeeId = parseInt(params.employeeId, 10);
 
@@ -25,7 +23,7 @@ export default function AttendancePage({ params }: { params: { employeeId: strin
         </Button>
       </div>
 
-      <Link href="/" className="mt-4 text-primary-secondary hover:underline">
+      <Link href="/" className="mt-4 text-primary hover:underline">
         戻る
       </Link>
     </div>

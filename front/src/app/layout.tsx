@@ -6,8 +6,6 @@ export const metadata: Metadata = {
   description: "写真撮影による勤怠管理システム",
 };
 
-export const runtime = "edge";
-
 export default function RootLayout({
   children,
 }: {
@@ -25,7 +23,7 @@ export default function RootLayout({
           <main className="flex-grow container mx-auto p-4">
             {children}
           </main>
-          <footer className="bg-gray-dark text-white py-2 px-4">
+          <footer className="bg-gray-800 text-white py-2 px-4">
             <div className="container mx-auto text-center text-small">
               © {new Date().getFullYear()} 勤怠管理システム
             </div>

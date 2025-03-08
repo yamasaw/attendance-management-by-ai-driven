@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { Clock } from "lucide-react";
 
-export const runtime = "edge";
-
 export default function Home() {
   return (
     <div className="flex flex-col items-center">
@@ -60,7 +58,7 @@ export default function Home() {
       <div className="mt-12">
         <Link
           href="/admin"
-          className="text-primary-secondary hover:underline text-sm"
+          className="text-primary hover:underline text-sm"
         >
           管理者ログイン
         </Link>
