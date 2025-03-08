@@ -27,20 +27,64 @@
 - Wranglerのインストール: `npm install -g wrangler`
 - プロジェクトルートで認証: `wrangler login`
 
-### Next.jsのデプロイ
-- Next.jsプロジェクトのビルド: `npm run build`
-- `wrangler.toml`の設定確認（特にworker名とルート設定）
-- デプロイコマンド: `wrangler deploy`
-
 ### D1データベースセットアップ
-- データベース作成: `wrangler d1 create <DB_NAME>`
-- マイグレーションファイル作成: `wrangler d1 migrations create <DB_NAME> <MIGRATION_NAME>`
-- マイグレーション実行: `wrangler d1 migrations apply <DB_NAME>`
+1. 開発用データベース作成:
+   ```bash
+   wrangler d1 create <DB_NAME>_dev
+   ```
+2. 本番用データベース作成:
+   ```bash
+   wrangler d1 create <DB_NAME>_prod
+   ```
+3. `wrangler.toml`に各環境のデータベース設定を追加:
+   ```toml
+   # 開発環境用
+   [[d1_databases]]
+   binding = "DB"
+   database_name = "<DB_NAME>_dev"
+   database_id = "<DEV_DB_ID>"
+   migrations_dir = "src/db/migrations"
 
-### R2ストレージ設定
-- バケット作成: `wrangler r2 bucket create <BUCKET_NAME>`
-- `wrangler.toml`にバケット設定を追加
-- 画像アップロード時のCORSヘッダー設定を忘れずに
+   # 本番環境用
+   [env.production]
+   [[env.production.d1_databases]]
+   binding = "DB"
+   database_name = "<DB_NAME>_prod"
+   database_id = "<PROD_DB_ID>"
+   ```
+
+### マイグレーション実行
+1. 開発環境:
+   ```bash
+   wrangler d1 migrations apply <DB_NAME>_dev --local
+   ```
+2. 本番環境:
+   ```bash
+   wrangler d1 execute <DB_NAME>_prod --file ./src/db/migrations/*.sql --env production --remote
+   ```
+
+### デプロイ実行
+1. 開発環境での動作確認:
+   ```bash
+   wrangler dev src/index.ts --local
+   ```
+2. 本番環境へのデプロイ:
+   ```bash
+   wrangler deploy src/index.ts --env production
+   ```
+
+### トラブルシューティング
+- マイグレーションエラー時は`--migrations-dir`オプションで正しいパスを指定
+- デプロイエラー時は`--verbose`フラグで詳細なログを確認
+- Node.js互換性の問題は`compatibility_flags = ["nodejs_compat"]`を設定
+
+### 環境変数の扱い
+- 機密情報は`wrangler secret put <KEY>`で設定
+- 環境変数を変更した場合は再デプロイが必要
+
+### カスタムドメイン設定
+- Cloudflareダッシュボードで「Workers & Pages」→「ドメイン」から設定
+- カスタムドメインにはCloudflareのDNSを使用推奨
 
 ## よくある問題と対処法
 
