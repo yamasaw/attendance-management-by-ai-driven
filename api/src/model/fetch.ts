@@ -1,16 +1,11 @@
 import { SelectQueryBuilder, sql } from 'kysely';
 import { getDB } from './db';
-import { Database, Employee, toEmployeeType } from './types';
+import { 
+  Employee, 
+  EmployeeSearchParams, 
+  toEmployeeType 
+} from '../types';
 import { Employee as EmployeeType } from '../db/types';
-
-// 検索条件の型定義
-export interface EmployeeSearchParams {
-  department?: string;
-  is_active?: boolean;
-  name?: string;
-  page: number;
-  limit: number;
-}
 
 // 単一の従業員をIDで取得
 export async function getEmployeeById(id: number): Promise<EmployeeType | null> {

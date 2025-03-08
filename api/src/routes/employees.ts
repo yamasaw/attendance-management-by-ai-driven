@@ -7,7 +7,7 @@ import { employeeSchema, employeeSearchParamsSchema } from '../schemas';
 import { getEmployees, getEmployeeById, getEmployeeByCode } from '../model/fetch';
 import { createEmployee, updateEmployee, deactivateEmployee, deleteEmployee } from '../model/update';
 import { validateEmployee } from '../model/validate';
-import { dbMiddleware } from '../model/middleware';
+import { dbMiddleware } from '../middleware';
 
 // 環境変数の型定義
 type Bindings = {

@@ -1,21 +1,10 @@
 import { getDB } from './db';
-import { NewEmployee, EmployeeUpdate } from './types';
-
-/**
- * 従業員データのバリデーションエラー
- */
-export interface ValidationError {
-  field: string;
-  message: string;
-}
-
-/**
- * バリデーション結果
- */
-export interface ValidationResult {
-  valid: boolean;
-  errors: ValidationError[];
-}
+import { 
+  NewEmployee, 
+  EmployeeUpdate, 
+  ValidationError, 
+  ValidationResult 
+} from '../types';
 
 /**
  * 従業員データの検証

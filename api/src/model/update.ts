@@ -1,5 +1,9 @@
 import { getDB } from './db';
-import { NewEmployee, EmployeeUpdate, toEmployeeType } from './types';
+import { 
+  NewEmployee, 
+  EmployeeUpdate, 
+  toEmployeeType 
+} from '../types';
 import { Employee as EmployeeType } from '../db/types';
 
 /**
