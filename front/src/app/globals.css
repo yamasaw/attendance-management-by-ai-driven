@@ -2,25 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 217 19% 27%;
-
-    --primary: 206 100% 42%;
-    --primary-secondary: 206 68% 51%;
-    
-    --gray-light: 30 8% 95%;
-    --gray-dark: 213 3% 19%;
-    
-    --success: 120 80% 27%;
-    --warning: 47 89% 51%;
-    --error: 355 81% 51%;
-  }
-
-  body {
-    @apply bg-gray-light text-gray-dark font-sans;
-  }
+/* 基本スタイル */
+body {
+  @apply bg-gray-100 text-gray-800;
 }
 
 /* アクリル効果を持つ背景用クラス */
@@ -47,17 +31,17 @@
 }
 
 .btn-secondary {
-  @apply bg-gray-light text-gray-dark border border-gray-300 hover:bg-gray-200;
+  @apply bg-gray-200 text-gray-800 border border-gray-300 hover:bg-gray-300;
 }
 
 .btn-success {
-  @apply bg-success text-white hover:bg-success/90;
+  @apply bg-success text-white hover:opacity-90;
 }
 
 .btn-warning {
-  @apply bg-warning text-gray-dark hover:bg-warning/90;
+  @apply bg-warning text-gray-800 hover:opacity-90;
 }
 
 .btn-error {
-  @apply bg-error text-white hover:bg-error/90;
+  @apply bg-error text-white hover:opacity-90;
 } 

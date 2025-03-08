@@ -1,9 +1,12 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "main": ".open-next/worker.js",
   "name": "attendance-management-front",
-  "compatibility_date": "2024-12-30",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2024-09-23",
   "compatibility_flags": ["nodejs_compat"],
+  "build": {
+    "command": "npm run build:worker"
+  },
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"

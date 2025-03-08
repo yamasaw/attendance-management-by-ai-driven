@@ -7,10 +7,10 @@
     "build": "next build --no-lint",
     "start": "next start",
     "lint": "next lint",
-    "build:cf": "next build --no-lint && npx @opennextjs/cloudflare",
-    "deploy": "npm run build:cf && wrangler deploy",
-    "deploy:prod": "npm run build:cf && wrangler deploy --env production",
-    "preview": "npm run build:cf && wrangler dev --local"
+    "build:worker": "next build --no-lint && npx @opennextjs/cloudflare",
+    "dev:worker": "wrangler dev --port 8771",
+    "preview:worker": "npm run build:worker && npm run dev:worker",
+    "deploy:worker": "npm run build:worker && wrangler deploy"
   },
   "keywords": [],
   "author": "Sosuke yamada <sosuke.yamada@example.com> (http://xxxx.com/sosuke.yamada)",
@@ -32,9 +32,9 @@
     "typescript": "^5.8.2"
   },
   "devDependencies": {
+    "@opennextjs/aws": "^3.5.1",
     "@opennextjs/cloudflare": "latest",
     "autoprefixer": "^10.4.14",
-    "open-next": "^2.3.0",
     "postcss": "^8.4.24",
     "tailwindcss": "^3.3.0",
     "wrangler": "latest"

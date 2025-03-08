@@ -1,0 +1,67 @@
+{
+  // Schema definition for better IDE support
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  // Main worker configuration
+  "main": ".open-next/worker.js",
+  "name": "attendance-management-front",
+  
+  // Required compatibility settings for Next.js
+  "compatibility_date": "2024-09-23",
+  "compatibility_flags": [
+    "nodejs_compat",
+    "nodejs_compat_v2"
+  ],
+
+  // Build configuration
+  "build": {
+    "command": "npm run build:worker",
+    "cwd": "front",
+    "watch_dir": "src"
+  },
+
+  // Asset configuration
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS",
+    "serve_single_page_app": true
+  },
+
+  // Environment variables
+  "vars": {
+    "API_URL": "https://api-dev.attendance-management.workers.dev/api",
+    "NODE_ENV": "development"
+  },
+
+  // Environment-specific configurations
+  "env": {
+    "development": {
+      "vars": {
+        "API_URL": "https://api-dev.attendance-management.workers.dev/api",
+        "NODE_ENV": "development"
+      }
+    },
+    "production": {
+      "name": "attendance-management-front-prod",
+      "vars": {
+        "API_URL": "https://api.attendance-management.workers.dev/api",
+        "NODE_ENV": "production"
+      }
+    }
+  },
+
+  // KV namespace for Next.js caching
+  "kv_namespaces": [
+    {
+      "binding": "NEXT_CACHE_WORKERS_KV",
+      "id": "755d9a34fb594e7d9efb1d726dffa182",
+      "preview_id": "755d9a34fb594e7d9efb1d726dffa182"
+    }
+  ],
+
+  // Development settings
+  "dev": {
+    "port": 8771,
+    "inspector_port": 9229
+  }
+} 
