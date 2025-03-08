@@ -3,6 +3,9 @@
 ## 1. フロントエンド
 ### フレームワーク
 - Next.js
+  - App Router アーキテクチャ（ページ構造とルーティング）
+  - Server Components（パフォーマンス最適化）
+  - React Server Actions（フォーム処理）
 - TypeScript
 
 ### UIライブラリ/デザインシステム
